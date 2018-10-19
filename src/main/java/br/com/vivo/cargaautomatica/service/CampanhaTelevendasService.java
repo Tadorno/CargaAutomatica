@@ -8,6 +8,7 @@ package br.com.vivo.cargaautomatica.service;
 import br.com.vivo.cargaautomatica.dao.CampanhaTelevendasDao;
 import br.com.vivo.cargaautomatica.model.CampanhaTelevendas;
 import br.com.vivo.cargaautomatica.util.ConnectionUtil;
+import br.com.vivo.cargaautomatica.util.FileUtil;
 import br.com.vivo.cargaautomatica.util.PropertySingleton;
 import br.com.vivo.cargaautomatica.util.SendEmailUtil;
 import java.io.File;
@@ -21,7 +22,7 @@ import java.util.logging.Logger;
  *
  * @author tadorno
  */
-public class CampanhaTelevendasService extends CampanhaService<CampanhaTelevendas>{
+public class CampanhaTelevendasService implements ICampanhaService{
      
     @Override
     public void realizarCarga() {
@@ -30,7 +31,11 @@ public class CampanhaTelevendasService extends CampanhaService<CampanhaTelevenda
 
         File file;
         try {
-            file = this.copyFile();
+            file = FileUtil.copyFile(
+                    PropertySingleton.getProperty("file-ativo_3-origem-path"),
+                    PropertySingleton.getProperty("file-ativo_3-local-path"),
+                    PropertySingleton.getProperty("file-ativo_3-name")
+            );
             
             Scanner sc = new Scanner(file);
             
@@ -43,7 +48,7 @@ public class CampanhaTelevendasService extends CampanhaService<CampanhaTelevenda
                 contatosDisponibilizados++;
                 
                 Logger.getLogger(CampanhaTelevendasService.class.getName()).log(Level.INFO, "Processando Linha {0}", new Object[]{contatosDisponibilizados});
-                CampanhaTelevendas campanha = lineToObject(sc.nextLine());
+                CampanhaTelevendas campanha = (CampanhaTelevendas) FileUtil.lineToObject(sc.nextLine(), CampanhaTelevendas.class);
                 
                 try{
                     CampanhaTelevendasDao.insert(campanha);
@@ -65,26 +70,6 @@ public class CampanhaTelevendasService extends CampanhaService<CampanhaTelevenda
             Logger.getLogger(CampanhaTelevendasService.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-    }
-    
-    @Override
-    public String getPathOrigem(){
-        return PropertySingleton.getProperty("file-ativo_3-origem-path");
-    }
-    
-    @Override
-    public String getPathDestino(){
-        return PropertySingleton.getProperty("file-ativo_3-local-path");
-    }
-    
-    @Override
-    public String getFileName(){
-        return PropertySingleton.getProperty("file-ativo_3-name");
-    }
-    
-    @Override
-    public Class getModelClass(){
-        return CampanhaTelevendas.class;
     }
     
     /**

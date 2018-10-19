@@ -9,8 +9,8 @@ import br.com.vivo.cargaautomatica.service.CampanhaRetencao5Service;
 import br.com.vivo.cargaautomatica.service.CampanhaRetencao6Service;
 import br.com.vivo.cargaautomatica.service.CampanhaRetencao7Service;
 import br.com.vivo.cargaautomatica.service.CampanhaRetencao8Service;
-import br.com.vivo.cargaautomatica.service.CampanhaService;
 import br.com.vivo.cargaautomatica.service.CampanhaTelevendasService;
+import br.com.vivo.cargaautomatica.service.ICampanhaService;
 
 /**
  *
@@ -24,7 +24,7 @@ public class CampanhaServiceFactory {
     private final static int CRM_RET_7 = 3;
     private final static int CRM_RET_8 = 4;
     
-    public static CampanhaService getService(int tipoCampanha){
+    public static ICampanhaService getService(int tipoCampanha){
         
         switch(tipoCampanha){
             case TELEVENDAS:

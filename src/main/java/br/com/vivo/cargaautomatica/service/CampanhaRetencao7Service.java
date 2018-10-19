@@ -5,38 +5,15 @@
  */
 package br.com.vivo.cargaautomatica.service;
 
-import br.com.vivo.cargaautomatica.model.CampanhaGenerica;
-import br.com.vivo.cargaautomatica.util.PropertySingleton;
-
 /**
  *
  * @author tadorno
  */
-public class CampanhaRetencao7Service extends CampanhaService<CampanhaGenerica>{
+public class CampanhaRetencao7Service implements ICampanhaService{
 
     @Override
     public void realizarCarga() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
-    public String getPathOrigem(){
-        return PropertySingleton.getProperty("file-crm_ret_7-origem-path");
-    }
-    
-    @Override
-    public String getPathDestino(){
-        return PropertySingleton.getProperty("file-crm_ret_7-local-path");
-    }
-    
-    @Override
-    public String getFileName(){
-        return PropertySingleton.getProperty("file-crm_ret_7-name");
-    }
-
-    @Override
-    public Class getModelClass() {
-        return CampanhaGenerica.class;
-    }
-    
 }

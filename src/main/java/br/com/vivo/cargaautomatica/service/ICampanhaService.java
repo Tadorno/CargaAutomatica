@@ -9,11 +9,11 @@ package br.com.vivo.cargaautomatica.service;
  *
  * @author tadorno
  */
-public class CampanhaRetencao8Service implements ICampanhaService{
-
-    @Override
-    public void realizarCarga() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
+public interface ICampanhaService {
+    
+    /**
+     * Realiza a carga no banco de dados
+     */
+    public abstract void realizarCarga();
+   
 }
