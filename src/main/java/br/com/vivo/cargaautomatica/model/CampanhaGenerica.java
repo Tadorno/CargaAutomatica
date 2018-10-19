@@ -15,9 +15,6 @@ import com.google.gson.annotations.SerializedName;
  */
 @JsonAdapter(CampanhaGenericaAdapter.class)
 public class CampanhaGenerica {
-   
-    @SerializedName("record_id") 
-    private Integer recordId;
     
     @SerializedName("contact_info") 
     private String contactInfo;
@@ -84,14 +81,6 @@ public class CampanhaGenerica {
             
     @SerializedName("switch_id")
     private Integer switchId;
-
-    public Integer getRecordId() {
-        return recordId;
-    }
-
-    public void setRecordId(Integer recordId) {
-        this.recordId = recordId;
-    }
 
     public String getContactInfo() {
         return contactInfo;

@@ -11,7 +11,7 @@ package br.com.vivo.cargaautomatica.model.enums;
  */
 public enum TzDbidEnum {
     
-    BET(0, "BET");
+    BET(131, "BET");
 
     private Integer cod;
     private String descricao;

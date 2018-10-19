@@ -61,47 +61,48 @@ public class CampanhaTelevendasDao {
                 .append(", OBSERVACAO")
                 .append(", FONE1")
                 .append(") VALUES ")
-                .append(" (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                .append(" (")
+                .append(" (SELECT (NVL(MAX(RECORD_ID), 0) + 1) AS NEW_RECORD_ID  FROM TA_BCA_MKT)")
+                .append(", ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
         
         PreparedStatement stmt = con.prepareStatement(query.toString());
         
-        stmt.setObject(1, campanha.getRecordId());
-        stmt.setObject(2, campanha.getContactInfo());
-        stmt.setObject(3, campanha.getContactInfoType());
-        stmt.setObject(4, campanha.getRecordType());
-        stmt.setObject(5, campanha.getRecordStatus());
-        stmt.setObject(6, campanha.getCallResult());
-        stmt.setObject(7, campanha.getAttempt());
-        stmt.setObject(8, campanha.getDialSchedTime());
-        stmt.setObject(9, campanha.getCallTime());
-        stmt.setObject(10, campanha.getDailyFrom());
-        stmt.setObject(11, campanha.getDailyTill());
-        stmt.setObject(12, campanha.getTzDbid());
-        stmt.setObject(13, campanha.getCampaignId());
-        stmt.setObject(14, campanha.getAgentId());
-        stmt.setObject(15, campanha.getChainId());
-        stmt.setObject(16, campanha.getChainN());
-        stmt.setObject(17, campanha.getGroupId());
-        stmt.setObject(18, campanha.getAppId());
-        stmt.setObject(19, campanha.getTreatments());
-        stmt.setObject(20, campanha.getMediaRef());
-        stmt.setObject(21, campanha.getEmailSubject());
-        stmt.setObject(22, campanha.getEmailTemplateId());
-        stmt.setObject(23, campanha.getSwitchId());
-        stmt.setObject(24, campanha.getDocumento());
-        stmt.setObject(25, campanha.getNome());
-        stmt.setObject(26, campanha.getCidade());
-        stmt.setObject(27, campanha.getUf());
-        stmt.setObject(28, campanha.getOfertaDirecionada());
-        stmt.setObject(29, campanha.getMediaRecGasto());
-        stmt.setObject(30, campanha.getMediaSms());
-        stmt.setObject(31, campanha.getMediaMb());
-        stmt.setObject(32, campanha.getPacoteDeInternet());
-        stmt.setObject(33, campanha.getDataVenc());
-        stmt.setObject(34, campanha.getConvergenteGvt());
-        stmt.setObject(35, campanha.getVivoFixo());
-        stmt.setObject(36, campanha.getObservacao());
-        stmt.setObject(37, campanha.getFone1());
+        stmt.setObject(1, campanha.getContactInfo());
+        stmt.setObject(2, campanha.getContactInfoType());
+        stmt.setObject(3, campanha.getRecordType());
+        stmt.setObject(4, campanha.getRecordStatus());
+        stmt.setObject(5, campanha.getCallResult());
+        stmt.setObject(6, campanha.getAttempt());
+        stmt.setObject(7, campanha.getDialSchedTime());
+        stmt.setObject(8, campanha.getCallTime());
+        stmt.setObject(9, campanha.getDailyFrom());
+        stmt.setObject(10, campanha.getDailyTill());
+        stmt.setObject(11, campanha.getTzDbid());
+        stmt.setObject(12, campanha.getCampaignId());
+        stmt.setObject(13, campanha.getAgentId());
+        stmt.setObject(14, campanha.getChainId());
+        stmt.setObject(15, campanha.getChainN());
+        stmt.setObject(16, campanha.getGroupId());
+        stmt.setObject(17, campanha.getAppId());
+        stmt.setObject(18, campanha.getTreatments());
+        stmt.setObject(19, campanha.getMediaRef());
+        stmt.setObject(20, campanha.getEmailSubject());
+        stmt.setObject(21, campanha.getEmailTemplateId());
+        stmt.setObject(22, campanha.getSwitchId());
+        stmt.setObject(23, campanha.getDocumento());
+        stmt.setObject(24, campanha.getNome());
+        stmt.setObject(25, campanha.getCidade());
+        stmt.setObject(26, campanha.getUf());
+        stmt.setObject(27, campanha.getOfertaDirecionada());
+        stmt.setObject(28, campanha.getMediaRecGasto());
+        stmt.setObject(29, campanha.getMediaSms());
+        stmt.setObject(30, campanha.getMediaMb());
+        stmt.setObject(31, campanha.getPacoteDeInternet());
+        stmt.setObject(32, campanha.getDataVenc());
+        stmt.setObject(33, campanha.getConvergenteGvt());
+        stmt.setObject(34, campanha.getVivoFixo());
+        stmt.setObject(35, campanha.getObservacao());
+        stmt.setObject(36, campanha.getFone1());
         
         stmt.executeUpdate();
     }

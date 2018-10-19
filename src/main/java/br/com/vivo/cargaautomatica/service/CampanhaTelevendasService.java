@@ -9,26 +9,21 @@ import br.com.vivo.cargaautomatica.dao.CampanhaTelevendasDao;
 import br.com.vivo.cargaautomatica.model.CampanhaTelevendas;
 import br.com.vivo.cargaautomatica.util.ConnectionUtil;
 import br.com.vivo.cargaautomatica.util.PropertySingleton;
-import com.google.gson.Gson;
+import br.com.vivo.cargaautomatica.util.SendEmailUtil;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.regex.Pattern;
-import org.apache.commons.io.FileUtils;
 
 /**
  *
  * @author tadorno
  */
-public class CampanhaTelevendasService {
-    
-    private final Gson gson = new Gson();
-    
+public class CampanhaTelevendasService extends CampanhaService<CampanhaTelevendas>{
+     
+    @Override
     public void realizarCarga() {
         
         Logger.getLogger(CampanhaTelevendasService.class.getName()).log(Level.INFO, "Iniciando carga de campanha Televendas.");
@@ -59,7 +54,7 @@ public class CampanhaTelevendasService {
                 
             }
             
-            this.enviarEmail(contatosDisponibilizados, contadosCarregados);
+            //this.enviarEmail(contatosDisponibilizados, contadosCarregados);
 
             ConnectionUtil.close();
             sc.close();
@@ -72,24 +67,24 @@ public class CampanhaTelevendasService {
         
     }
     
-    /**
-     * Copia o arquivo da pasta de origem para a pasta local
-     */
-    private File copyFile() throws IOException{
-        Logger.getLogger(CampanhaTelevendasService.class.getName()).log(Level.INFO, "Copiando arquivo de carga da pasta de origem para uma pasta local.");
-
-        String filepathOrigem = PropertySingleton.getProperty("file-origem-path");
-        String filepathLocal = PropertySingleton.getProperty("file-local-path");
-        String fileName = PropertySingleton.getProperty("file-name");
-        
-        File source = new File(filepathOrigem + fileName);
-        File dest = new File(filepathLocal + fileName);
-        try {
-            FileUtils.copyFile(source, dest);
-            return dest;
-        } catch (IOException e) {
-            throw e;
-        }
+    @Override
+    public String getPathOrigem(){
+        return PropertySingleton.getProperty("file-ativo_3-origem-path");
+    }
+    
+    @Override
+    public String getPathDestino(){
+        return PropertySingleton.getProperty("file-ativo_3-local-path");
+    }
+    
+    @Override
+    public String getFileName(){
+        return PropertySingleton.getProperty("file-ativo_3-name");
+    }
+    
+    @Override
+    public Class getModelClass(){
+        return CampanhaTelevendas.class;
     }
     
     /**
@@ -105,30 +100,7 @@ public class CampanhaTelevendasService {
                  
         String html = "<h1>This is actual message embedded in HTML tags</h1>";
         
-        //SendEmailUtil.enviar(subject, html);
+        SendEmailUtil.enviar(subject, html);
     }
-    
-    /**
-     * Converte uma linha do arquivo de importação em um objeto 
-     * CampanhaTelevendas
-     * 
-     * @param line
-     * @return 
-     */
-    private CampanhaTelevendas lineToObject(String line) {
-        Map<String, String> argumentMap = new HashMap<>();
-        String[] splitedLine = line.split(Pattern.quote("|"));
-
-        for(String field : splitedLine) {
-            String[] splitedField = field.split(Pattern.quote("="));
-            if(splitedField.length == 2) {
-                    argumentMap.put(splitedField[0], splitedField[1]);
-            } 
-        }
-        
-        String json = gson.toJson(argumentMap);
-
-        return gson.fromJson(json, CampanhaTelevendas.class);
-    }
-    
+ 
 }

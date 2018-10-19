@@ -37,9 +37,6 @@ public class CampanhaTelevendasAdapter extends TypeAdapter<CampanhaTelevendas>{
         while (reader.hasNext()) {
             String name = reader.nextName();
             switch(name){
-                case "record_id":
-                    campanha.setRecordId(reader.nextInt());
-                    break;
                 case "contact_info":
                     campanha.setContactInfo(reader.nextString());
                     break;

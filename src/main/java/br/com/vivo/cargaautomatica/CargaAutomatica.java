@@ -5,7 +5,7 @@
  */
 package br.com.vivo.cargaautomatica;
 
-import br.com.vivo.cargaautomatica.service.CampanhaTelevendasService;
+import br.com.vivo.cargaautomatica.service.factory.CampanhaServiceFactory;
 
 
 
@@ -15,22 +15,12 @@ import br.com.vivo.cargaautomatica.service.CampanhaTelevendasService;
  */
 public class CargaAutomatica {
 
-    private final static int TELEVENDAS = 0;
-    
     public static void main(String... args) {
         
         try{
             int tipoCampanha = Integer.parseInt(args[0]);
             
-            switch(tipoCampanha){
-                case TELEVENDAS:
-                    CampanhaTelevendasService service = new CampanhaTelevendasService();
-                    service.realizarCarga();
-                    break;
-                    
-                default:
-                    throw new IllegalArgumentException("Tipo de campanha inválida");
-            }
+            CampanhaServiceFactory.getService(tipoCampanha).realizarCarga();
         }catch(IndexOutOfBoundsException iobx){
             throw new IllegalArgumentException("Não foi informado argumentos para a execução da rotina");
         }catch(NumberFormatException nfe){
