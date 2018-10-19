@@ -5,7 +5,6 @@
  */
 package br.com.vivo.cargaautomatica.service;
 
-import br.com.vivo.cargaautomatica.util.PropertySingleton;
 import com.google.gson.Gson;
 import java.io.File;
 import java.io.IOException;
@@ -62,9 +61,9 @@ public abstract class CampanhaService<T> {
     protected File copyFile() throws IOException{
         Logger.getLogger(this.getClass().getName()).log(Level.INFO, "Copiando arquivo de carga da pasta de origem para uma pasta local.");
 
-        String filepathOrigem = PropertySingleton.getProperty(this.getPathOrigem());
-        String filepathLocal = PropertySingleton.getProperty(this.getPathDestino());
-        String fileName = PropertySingleton.getProperty(this.getFileName());
+        String filepathOrigem = this.getPathOrigem();
+        String filepathLocal = this.getPathDestino();
+        String fileName = this.getFileName();
         
         File source = new File(filepathOrigem + fileName);
         File dest = new File(filepathLocal + fileName);
