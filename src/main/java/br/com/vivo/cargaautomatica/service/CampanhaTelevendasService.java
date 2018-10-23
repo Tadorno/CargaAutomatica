@@ -6,13 +6,14 @@
 package br.com.vivo.cargaautomatica.service;
 
 import br.com.vivo.cargaautomatica.dao.CampanhaTelevendasDao;
+import br.com.vivo.cargaautomatica.dao.factory.ConnectionFactory;
 import br.com.vivo.cargaautomatica.model.CampanhaTelevendas;
-import br.com.vivo.cargaautomatica.util.ConnectionUtil;
 import br.com.vivo.cargaautomatica.util.FileUtil;
 import br.com.vivo.cargaautomatica.util.PropertySingleton;
 import br.com.vivo.cargaautomatica.util.SendEmailUtil;
 import java.io.File;
 import java.io.IOException;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -44,29 +45,29 @@ public class CampanhaTelevendasService implements ICampanhaService{
             
             Logger.getLogger(CampanhaTelevendasService.class.getName()).log(Level.INFO, "Iniciando leitura do arquivo de carga para a persistência");
 
+            Connection con = ConnectionFactory.getConnection(ConnectionFactory.GEN_OCS);
             while (sc.hasNextLine()) {
                 contatosDisponibilizados++;
                 
                 Logger.getLogger(CampanhaTelevendasService.class.getName()).log(Level.INFO, "Processando Linha {0}", new Object[]{contatosDisponibilizados});
                 CampanhaTelevendas campanha = (CampanhaTelevendas) FileUtil.lineToObject(sc.nextLine(), CampanhaTelevendas.class);
-                
+                             
                 try{
-                    CampanhaTelevendasDao.insert(campanha);
+                    CampanhaTelevendasDao.insert(campanha, con);
                     contadosCarregados++;
                 } catch (SQLException ex) {
                     Logger.getLogger(CampanhaTelevendasService.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                
             }
             
             //this.enviarEmail(contatosDisponibilizados, contadosCarregados);
 
-            ConnectionUtil.close();
+            con.close();
             sc.close();
             file.delete();
             Logger.getLogger(CampanhaTelevendasService.class.getName()).log(Level.INFO, "Carga finalizada. Total informado: {0} - Total com sucesso: {1}", new Object[]{contatosDisponibilizados, contadosCarregados});
 
-        } catch (IOException | SQLException ex) {
+        } catch (IOException | SQLException | ClassNotFoundException ex) {
             Logger.getLogger(CampanhaTelevendasService.class.getName()).log(Level.SEVERE, null, ex);
         }
         

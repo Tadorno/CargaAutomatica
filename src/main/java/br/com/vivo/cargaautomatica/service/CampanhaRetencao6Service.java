@@ -13,7 +13,8 @@ public class CampanhaRetencao6Service implements ICampanhaService{
 
     @Override
     public void realizarCarga() {
-        
+        //Recupera dados do WS
+        //Salva no banco
     }
   
 }

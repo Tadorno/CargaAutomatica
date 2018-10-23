@@ -22,9 +22,9 @@ public class CargaAutomatica {
             
             CampanhaServiceFactory.getService(tipoCampanha).realizarCarga();
         }catch(IndexOutOfBoundsException iobx){
-            throw new IllegalArgumentException("Não foi informado argumentos para a execução da rotina");
+            throw new IllegalArgumentException("Não foi informado argumentos para a execução da rotina", iobx);
         }catch(NumberFormatException nfe){
-            throw new IllegalArgumentException("Valor de argumento inválido");
+            throw new IllegalArgumentException("Valor de argumento inválido", nfe);
         }
 
     }
