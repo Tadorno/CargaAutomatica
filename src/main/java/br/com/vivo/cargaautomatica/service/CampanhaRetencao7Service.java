@@ -8,6 +8,7 @@ package br.com.vivo.cargaautomatica.service;
 import br.com.vivo.cargaautomatica.dao.CampanhaGenericaDao;
 import br.com.vivo.cargaautomatica.dao.factory.ConnectionFactory;
 import br.com.vivo.cargaautomatica.model.CampanhaGenerica;
+import br.com.vivo.cargaautomatica.model.enums.DataBaseEnum;
 import br.com.vivo.cargaautomatica.util.FileUtil;
 import br.com.vivo.cargaautomatica.util.PropertySingleton;
 import java.io.File;
@@ -43,7 +44,7 @@ public class CampanhaRetencao7Service implements ICampanhaService{
             
             Logger.getLogger(CampanhaRetencao7Service.class.getName()).log(Level.INFO, "Iniciando leitura do arquivo de carga para a persistência");
 
-            Connection con = ConnectionFactory.getConnection(ConnectionFactory.GEN_OCS);
+            Connection con = ConnectionFactory.getConnection(DataBaseEnum.GEN_OCS);
             while (sc.hasNextLine()) {
                 contatosDisponibilizados++;
                 

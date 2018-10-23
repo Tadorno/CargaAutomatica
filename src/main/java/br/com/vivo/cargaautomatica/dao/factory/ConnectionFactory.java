@@ -7,6 +7,7 @@ package br.com.vivo.cargaautomatica.dao.factory;
 
 import br.com.vivo.cargaautomatica.dao.util.ConnectionUtilOCS;
 import br.com.vivo.cargaautomatica.dao.util.IConnectionUtil;
+import br.com.vivo.cargaautomatica.model.enums.DataBaseEnum;
 import java.sql.Connection;
 import java.sql.SQLException;
 
@@ -16,13 +17,10 @@ import java.sql.SQLException;
  */
 public class ConnectionFactory {
     
-    public static final int GEN_OCS = 1;
-    public static final int OUTRO = 2;
-    
-    public static Connection getConnection(int idDatabase) throws SQLException, ClassNotFoundException{
+    public static Connection getConnection(DataBaseEnum database) throws SQLException, ClassNotFoundException{
 
         IConnectionUtil connectionUtil;
-        switch(idDatabase){
+        switch(database){
             case GEN_OCS:
                 connectionUtil = new ConnectionUtilOCS();
                 return connectionUtil.getConnection();

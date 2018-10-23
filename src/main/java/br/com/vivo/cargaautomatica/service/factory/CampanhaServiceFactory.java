@@ -5,6 +5,7 @@
  */
 package br.com.vivo.cargaautomatica.service.factory;
 
+import br.com.vivo.cargaautomatica.model.enums.TipoCampanhaEnum;
 import br.com.vivo.cargaautomatica.service.CampanhaRetencao5Service;
 import br.com.vivo.cargaautomatica.service.CampanhaRetencao6Service;
 import br.com.vivo.cargaautomatica.service.CampanhaRetencao7Service;
@@ -17,15 +18,9 @@ import br.com.vivo.cargaautomatica.service.ICampanhaService;
  * @author tadorno
  */
 public class CampanhaServiceFactory {
-    
-    private final static int TELEVENDAS = 0;
-    private final static int CRM_RET_5 = 1;
-    private final static int CRM_RET_6 = 2;
-    private final static int CRM_RET_7 = 3;
-    private final static int CRM_RET_8 = 4;
-    
-    public static ICampanhaService getService(int tipoCampanha){
-        
+      
+    public static ICampanhaService getService(TipoCampanhaEnum tipoCampanha){
+ 
         switch(tipoCampanha){
             case TELEVENDAS:
                 return new CampanhaTelevendasService();

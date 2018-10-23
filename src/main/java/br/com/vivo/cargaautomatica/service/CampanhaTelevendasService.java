@@ -8,6 +8,7 @@ package br.com.vivo.cargaautomatica.service;
 import br.com.vivo.cargaautomatica.dao.CampanhaTelevendasDao;
 import br.com.vivo.cargaautomatica.dao.factory.ConnectionFactory;
 import br.com.vivo.cargaautomatica.model.CampanhaTelevendas;
+import br.com.vivo.cargaautomatica.model.enums.DataBaseEnum;
 import br.com.vivo.cargaautomatica.util.FileUtil;
 import br.com.vivo.cargaautomatica.util.PropertySingleton;
 import br.com.vivo.cargaautomatica.util.SendEmailUtil;
@@ -45,7 +46,7 @@ public class CampanhaTelevendasService implements ICampanhaService{
             
             Logger.getLogger(CampanhaTelevendasService.class.getName()).log(Level.INFO, "Iniciando leitura do arquivo de carga para a persistência");
 
-            Connection con = ConnectionFactory.getConnection(ConnectionFactory.GEN_OCS);
+            Connection con = ConnectionFactory.getConnection(DataBaseEnum.GEN_OCS);
             while (sc.hasNextLine()) {
                 contatosDisponibilizados++;
                 

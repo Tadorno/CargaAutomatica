@@ -5,6 +5,7 @@
  */
 package br.com.vivo.cargaautomatica;
 
+import br.com.vivo.cargaautomatica.model.enums.TipoCampanhaEnum;
 import br.com.vivo.cargaautomatica.service.factory.CampanhaServiceFactory;
 
 
@@ -18,9 +19,9 @@ public class CargaAutomatica {
     public static void main(String... args) {
         
         try{
-            int tipoCampanha = Integer.parseInt(args[0]);
+            TipoCampanhaEnum tipoCampanhaEnum = TipoCampanhaEnum.values()[Integer.parseInt(args[0])];
             
-            CampanhaServiceFactory.getService(tipoCampanha).realizarCarga();
+            CampanhaServiceFactory.getService(tipoCampanhaEnum).realizarCarga();
         }catch(IndexOutOfBoundsException iobx){
             throw new IllegalArgumentException("Não foi informado argumentos para a execução da rotina", iobx);
         }catch(NumberFormatException nfe){
