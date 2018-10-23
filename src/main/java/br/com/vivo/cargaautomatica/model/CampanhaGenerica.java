@@ -6,6 +6,8 @@
 package br.com.vivo.cargaautomatica.model;
 
 import br.com.vivo.cargaautomatica.model.adapter.CampanhaGenericaAdapter;
+import br.com.vivo.cargaautomatica.model.enums.RecordStatusEnum;
+import br.com.vivo.cargaautomatica.model.enums.RecordTypeEnum;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 
@@ -23,22 +25,13 @@ public class CampanhaGenerica {
     private Integer contactInfoType;
             
     @SerializedName("record_type")
-    private Integer recordType;       
+    private Integer recordType = RecordTypeEnum.GENERAL.getCod();       
             
     @SerializedName("record_status")
-    private Integer recordStatus;
-            
-    @SerializedName("call_result") 
-    private Integer callResult;
+    private Integer recordStatus = RecordStatusEnum.READY.getCod();
                
     @SerializedName("attempt") 
-    private Integer attempt;
-            
-    @SerializedName("dial_sched_time") 
-    private Integer dialSchedTime;
-            
-    @SerializedName("call_time")
-    private Integer callTime;
+    private Integer attempt = 0;
             
     @SerializedName("daily_from")
     private Integer dailyFrom;
@@ -49,38 +42,11 @@ public class CampanhaGenerica {
     @SerializedName("tz_dbid")
     private Integer tzDbid;
             
-    @SerializedName("campaign_id")
-    private Integer campaignId;
-            
-    @SerializedName("agent_id")
-    private String agentId;
-            
     @SerializedName("chain_id")
     private Integer chainId;
             
     @SerializedName("chain_n")
     private Integer chainN;
-            
-    @SerializedName("group_id")
-    private Integer groupId;
-            
-    @SerializedName("app_id")
-    private Integer appId;
-            
-    @SerializedName("treatments")
-    private String treatments;
-            
-    @SerializedName("media_ref")
-    private Integer mediaRef;
-    
-    @SerializedName("email_subject")
-    private String emailSubject;
-            
-    @SerializedName("email_template_id")
-    private Integer emailTemplateId;
-            
-    @SerializedName("switch_id")
-    private Integer switchId;
 
     public String getContactInfo() {
         return contactInfo;
@@ -114,36 +80,12 @@ public class CampanhaGenerica {
         this.recordStatus = recordStatus;
     }
 
-    public Integer getCallResult() {
-        return callResult;
-    }
-
-    public void setCallResult(Integer callResult) {
-        this.callResult = callResult;
-    }
-
     public Integer getAttempt() {
         return attempt;
     }
 
     public void setAttempt(Integer attempt) {
         this.attempt = attempt;
-    }
-
-    public Integer getDialSchedTime() {
-        return dialSchedTime;
-    }
-
-    public void setDialSchedTime(Integer dialSchedTime) {
-        this.dialSchedTime = dialSchedTime;
-    }
-
-    public Integer getCallTime() {
-        return callTime;
-    }
-
-    public void setCallTime(Integer callTime) {
-        this.callTime = callTime;
     }
 
     public Integer getDailyFrom() {
@@ -170,22 +112,6 @@ public class CampanhaGenerica {
         this.tzDbid = tzDbid;
     }
 
-    public Integer getCampaignId() {
-        return campaignId;
-    }
-
-    public void setCampaignId(Integer campaignId) {
-        this.campaignId = campaignId;
-    }
-
-    public String getAgentId() {
-        return agentId;
-    }
-
-    public void setAgentId(String agentId) {
-        this.agentId = agentId;
-    }
-
     public Integer getChainId() {
         return chainId;
     }
@@ -201,62 +127,5 @@ public class CampanhaGenerica {
     public void setChainN(Integer chainN) {
         this.chainN = chainN;
     }
-
-    public Integer getGroupId() {
-        return groupId;
-    }
-
-    public void setGroupId(Integer groupId) {
-        this.groupId = groupId;
-    }
-
-    public Integer getAppId() {
-        return appId;
-    }
-
-    public void setAppId(Integer appId) {
-        this.appId = appId;
-    }
-
-    public String getTreatments() {
-        return treatments;
-    }
-
-    public void setTreatments(String treatments) {
-        this.treatments = treatments;
-    }
-
-    public Integer getMediaRef() {
-        return mediaRef;
-    }
-
-    public void setMediaRef(Integer mediaRef) {
-        this.mediaRef = mediaRef;
-    }
-
-    public String getEmailSubject() {
-        return emailSubject;
-    }
-
-    public void setEmailSubject(String emailSubject) {
-        this.emailSubject = emailSubject;
-    }
-
-    public Integer getEmailTemplateId() {
-        return emailTemplateId;
-    }
-
-    public void setEmailTemplateId(Integer emailTemplateId) {
-        this.emailTemplateId = emailTemplateId;
-    }
-
-    public Integer getSwitchId() {
-        return switchId;
-    }
-
-    public void setSwitchId(Integer switchId) {
-        this.switchId = switchId;
-    }
-    
     
 }

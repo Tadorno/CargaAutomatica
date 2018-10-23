@@ -6,7 +6,6 @@
 package br.com.vivo.cargaautomatica.model.adapter;
 
 import br.com.vivo.cargaautomatica.model.CampanhaGenerica;
-import br.com.vivo.cargaautomatica.model.enums.CallResultEnum;
 import br.com.vivo.cargaautomatica.model.enums.ContactInfoTypeEnum;
 import br.com.vivo.cargaautomatica.model.enums.RecordStatusEnum;
 import br.com.vivo.cargaautomatica.model.enums.RecordTypeEnum;
@@ -38,7 +37,7 @@ public class CampanhaGenericaAdapter extends TypeAdapter<CampanhaGenerica>{
             String name = reader.nextName();
             switch(name){
                 case "contact_info":
-                    campanha.setContactInfo(reader.nextString());
+                    campanha.setContactInfo(this.transformContactInfo(reader.nextString()));
                     break;
                 case "contact_info_type":
                     campanha.setContactInfoType(
@@ -52,18 +51,8 @@ public class CampanhaGenericaAdapter extends TypeAdapter<CampanhaGenerica>{
                     campanha.setRecordStatus(
                             RecordStatusEnum.findByDescricao(reader.nextString()).getCod());
                     break;
-                case "call_result":
-                    campanha.setCallResult(
-                            CallResultEnum.findByDescricao(reader.nextString()).getCod());
-                    break;
                 case "attempt":
                     campanha.setAttempt(reader.nextInt());
-                    break;
-                case "dial_sched_time":
-                    campanha.setDialSchedTime(DateUtil.timeToSeconds(reader.nextString()));
-                    break;   
-                case "call_time":
-                    campanha.setCallTime(DateUtil.timeToSeconds(reader.nextString()));
                     break;
                 case "daily_from":
                     campanha.setDailyFrom(DateUtil.timeToSeconds(reader.nextString()));
@@ -72,41 +61,15 @@ public class CampanhaGenericaAdapter extends TypeAdapter<CampanhaGenerica>{
                     campanha.setDailyTill(DateUtil.timeToSeconds(reader.nextString()));
                     break;
                 case "tz_dbid":
+                    //TODO: Ver como recuperar do depara
                     campanha.setTzDbid(
                             TzDbidEnum.findByDescricao(reader.nextString()).getCod());
-                    break;
-                case "campaign_id":
-                    campanha.setCampaignId(reader.nextInt());
-                    break;
-                case "agent_id":
-                    campanha.setAgentId(reader.nextString());
                     break;
                 case "chain_id":
                     campanha.setChainId(reader.nextInt());
                     break;
                 case "chain_n":
                     campanha.setChainN(reader.nextInt());
-                    break;
-                case "group_id":
-                    campanha.setGroupId(reader.nextInt());
-                    break;
-                case "app_id":
-                    campanha.setAppId(reader.nextInt());
-                    break;
-                case "treatments":
-                    campanha.setTreatments(reader.nextString());
-                    break;
-                case "media_ref":
-                    campanha.setMediaRef(reader.nextInt());
-                    break;
-                case "email_subject":
-                    campanha.setEmailSubject(reader.nextString());
-                    break;
-                case "email_template_id":
-                    campanha.setEmailTemplateId(reader.nextInt());
-                    break;
-                case "switch_id":
-                    campanha.setSwitchId(reader.nextInt());
                     break;
                 default : reader.skipValue();
             }
@@ -116,4 +79,8 @@ public class CampanhaGenericaAdapter extends TypeAdapter<CampanhaGenerica>{
         return campanha;
     }
     
+    private String transformContactInfo(String rawContactInfo){
+    
+        return rawContactInfo;
+    }
 }
