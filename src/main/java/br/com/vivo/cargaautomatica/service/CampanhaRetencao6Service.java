@@ -12,7 +12,7 @@ import java.util.logging.Logger;
  *
  * @author tadorno
  */
-public class CampanhaRetencao6Service implements ICampanhaService{
+public class CampanhaRetencao6Service extends CampanhaService{
 
     @Override
     public void realizarCarga() {

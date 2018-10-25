@@ -10,8 +10,8 @@ import br.com.vivo.cargaautomatica.service.CampanhaRetencao5Service;
 import br.com.vivo.cargaautomatica.service.CampanhaRetencao6Service;
 import br.com.vivo.cargaautomatica.service.CampanhaRetencao7Service;
 import br.com.vivo.cargaautomatica.service.CampanhaRetencao8Service;
+import br.com.vivo.cargaautomatica.service.CampanhaService;
 import br.com.vivo.cargaautomatica.service.CampanhaTelevendasService;
-import br.com.vivo.cargaautomatica.service.ICampanhaService;
 
 /**
  *
@@ -19,7 +19,7 @@ import br.com.vivo.cargaautomatica.service.ICampanhaService;
  */
 public class CampanhaServiceFactory {
       
-    public static ICampanhaService getService(TipoCampanhaEnum tipoCampanha){
+    public static CampanhaService getService(TipoCampanhaEnum tipoCampanha){
  
         switch(tipoCampanha){
             case TELEVENDAS:

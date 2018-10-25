@@ -1,0 +1,13 @@
+Using machine='TADORNOpw10'
+Using Campaign='CL_BCA_MKT_3reg.txt'
+Using file='C:\Users\tadorno\Documents\JAVA\workspace\projects\CargaAutomaticaTelevendas\src\es\indra\CL_BCA_MKT_3reg.txt'
+
+Total number of contacts: 3
+
+Linha 1: FALHA - ORA-00001: restrição exclusiva (GEN_OCS.TA_BCA_MKT_PK) violada
+
+Linha 2: OK
+Linha 3: FALHA - ORA-00001: restrição exclusiva (GEN_OCS.TA_BCA_MKT_PK) violada
+
+
+Job ended with errors

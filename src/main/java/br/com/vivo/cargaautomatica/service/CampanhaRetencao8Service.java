@@ -5,9 +5,9 @@
  */
 package br.com.vivo.cargaautomatica.service;
 
-import br.com.vivo.cargaautomatica.dao.CampanhaGenericaDao;
+import br.com.vivo.cargaautomatica.dao.CampanhaRetencao8Dao;
 import br.com.vivo.cargaautomatica.dao.factory.ConnectionFactory;
-import br.com.vivo.cargaautomatica.model.CampanhaGenerica;
+import br.com.vivo.cargaautomatica.model.CampanhaRetencaoWinback;
 import br.com.vivo.cargaautomatica.model.enums.DataBaseEnum;
 import br.com.vivo.cargaautomatica.util.FileUtil;
 import br.com.vivo.cargaautomatica.util.PropertySingleton;
@@ -23,7 +23,7 @@ import java.util.logging.Logger;
  *
  * @author tadorno
  */
-public class CampanhaRetencao8Service implements ICampanhaService{
+public class CampanhaRetencao8Service extends CampanhaService{
 
     @Override
     public void realizarCarga() {
@@ -33,8 +33,8 @@ public class CampanhaRetencao8Service implements ICampanhaService{
         try {
             file = FileUtil.copyFile(
                     PropertySingleton.getProperty("file-crm_ret_8-origem-path"),
-                    PropertySingleton.getProperty("file-crm_ret_8-origem-path"),
-                    PropertySingleton.getProperty("file-crm_ret_8-origem-path")
+                    PropertySingleton.getProperty("file-crm_ret_8-local-path"),
+                    PropertySingleton.getProperty("file-crm_ret_8-name")
             );
             
             Scanner sc = new Scanner(file);
@@ -45,19 +45,42 @@ public class CampanhaRetencao8Service implements ICampanhaService{
             Logger.getLogger(CampanhaRetencao8Service.class.getName()).log(Level.INFO, "Iniciando leitura do arquivo de carga para a persistência");
 
             Connection con = ConnectionFactory.getConnection(DataBaseEnum.GEN_OCS);
+            
+            StringBuilder sbLog = new StringBuilder();
+            StringBuilder sbLineErros = new StringBuilder();
             while (sc.hasNextLine()) {
                 contatosDisponibilizados++;
                 
                 Logger.getLogger(CampanhaRetencao8Service.class.getName()).log(Level.INFO, "Processando Linha {0}", new Object[]{contatosDisponibilizados});
-                CampanhaGenerica campanha = (CampanhaGenerica) FileUtil.lineToObject(sc.nextLine(), CampanhaGenerica.class);
-                             
+                String line = sc.nextLine();
+                CampanhaRetencaoWinback campanha = (CampanhaRetencaoWinback) FileUtil.lineToObject(line, CampanhaRetencaoWinback.class);
+                
                 try{
-                    CampanhaGenericaDao.insert(campanha, con);
+                    CampanhaRetencao8Dao.insert(campanha, con);
                     contadosCarregados++;
+                    sbLog.append("Linha ")
+                            .append(contatosDisponibilizados)
+                            .append(": OK")
+                            .append(System.lineSeparator());
                 } catch (SQLException ex) {
+                    sbLog.append("Linha ")
+                            .append(contatosDisponibilizados)
+                            .append(": FALHA - ")
+                            .append(ex.getMessage())
+                            .append(System.lineSeparator());
+                    sbLineErros.append(line)
+                            .append(System.lineSeparator());
                     Logger.getLogger(CampanhaRetencao8Service.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
+            
+            this.makeFileLog(
+                    PropertySingleton.getProperty("file-crm_ret_8-origem-path"),
+                    PropertySingleton.getProperty("file-crm_ret_8-name"),
+                    sbLog.toString(), 
+                    sbLineErros.toString(), 
+                    contatosDisponibilizados,
+                    contadosCarregados);
 
             con.close();
             sc.close();

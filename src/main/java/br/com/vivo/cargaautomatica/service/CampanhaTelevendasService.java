@@ -24,7 +24,7 @@ import java.util.logging.Logger;
  *
  * @author tadorno
  */
-public class CampanhaTelevendasService implements ICampanhaService{
+public class CampanhaTelevendasService extends CampanhaService{
      
     @Override
     public void realizarCarga() {
@@ -33,6 +33,7 @@ public class CampanhaTelevendasService implements ICampanhaService{
 
         File file;
         try {
+          
             file = FileUtil.copyFile(
                     PropertySingleton.getProperty("file-ativo_3-origem-path"),
                     PropertySingleton.getProperty("file-ativo_3-local-path"),
@@ -47,25 +48,49 @@ public class CampanhaTelevendasService implements ICampanhaService{
             Logger.getLogger(CampanhaTelevendasService.class.getName()).log(Level.INFO, "Iniciando leitura do arquivo de carga para a persistência");
 
             Connection con = ConnectionFactory.getConnection(DataBaseEnum.GEN_OCS);
+            
+            StringBuilder sbLog = new StringBuilder();
+            StringBuilder sbLineErros = new StringBuilder();
             while (sc.hasNextLine()) {
                 contatosDisponibilizados++;
                 
                 Logger.getLogger(CampanhaTelevendasService.class.getName()).log(Level.INFO, "Processando Linha {0}", new Object[]{contatosDisponibilizados});
-                CampanhaTelevendas campanha = (CampanhaTelevendas) FileUtil.lineToObject(sc.nextLine(), CampanhaTelevendas.class);
+                String line = sc.nextLine();
+                CampanhaTelevendas campanha = (CampanhaTelevendas) FileUtil.lineToObject(line, CampanhaTelevendas.class);
                              
                 try{
                     CampanhaTelevendasDao.insert(campanha, con);
                     contadosCarregados++;
+                    sbLog.append("Linha ")
+                            .append(contatosDisponibilizados)
+                            .append(": OK")
+                            .append(System.lineSeparator());
                 } catch (SQLException ex) {
+                    sbLog.append("Linha ")
+                            .append(contatosDisponibilizados)
+                            .append(": FALHA - ")
+                            .append(ex.getMessage())
+                            .append(System.lineSeparator());
+                    sbLineErros.append(line)
+                            .append(System.lineSeparator());
                     Logger.getLogger(CampanhaTelevendasService.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
+            
+            this.makeFileLog(
+                    PropertySingleton.getProperty("file-ativo_3-origem-path"),
+                    PropertySingleton.getProperty("file-ativo_3-name"),
+                    sbLog.toString(), 
+                    sbLineErros.toString(), 
+                    contatosDisponibilizados,
+                    contadosCarregados);
             
             //this.enviarEmail(contatosDisponibilizados, contadosCarregados);
 
             con.close();
             sc.close();
             file.delete();
+            
             Logger.getLogger(CampanhaTelevendasService.class.getName()).log(Level.INFO, "Carga finalizada. Total informado: {0} - Total com sucesso: {1}", new Object[]{contatosDisponibilizados, contadosCarregados});
 
         } catch (IOException | SQLException | ClassNotFoundException ex) {
